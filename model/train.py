@@ -35,8 +35,8 @@ correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 # training_iters = 50000
-training_iters = 1
-display_step = 1
+training_iters = 5000
+display_step = 100
 
 # Initializing the variables
 init = tf.global_variables_initializer()

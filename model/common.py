@@ -4,6 +4,7 @@ import collections
 import numpy as np
 import tensorflow as tf
 from tensorflow.contrib import rnn
+import re
 
 # number of units in RNN cell
 n_hidden = 512
@@ -13,7 +14,7 @@ Args:
     x: tf input
     weights: weights tf variable
     biases: biases tf variable
-    n_input: num words inputed
+    n_input: batch size
 Returns:
     tf.matmul: RNN definition
 
@@ -54,10 +55,15 @@ Seperates words in file to be parsed later
 def read_data(fname):
     with open(fname) as f:
         content = f.readlines()
-    content = [x.strip() for x in content]
-    content = [word for i in range(len(content)) for word in content[i].split()]
-    content = np.array(content)
-    return content
+    totaloutput=[]
+    for line in content:
+        output = re.search(r'^(time)="(.*?)T', line).groups()
+        input = re.search(r'Z" (.*)', line).groups()
+        output2 = re.findall(r'[A-Za-z0-9]\w+', input[0])
+        output2 = [output[0]]+[output[1]]+output2
+        totaloutput = totaloutput + output2
+    totaloutput = np.array(totaloutput)
+    return totaloutput
 
 '''
 Args:
@@ -83,7 +89,7 @@ def build_dataset(words, dictionary):
 '''
 Args:
     dictionary: a dictionary of all the known words so far
-    n_input: num words inputed
+    n_input: batch size
 Returns:
     RNN: RNN LSTM model
     x: tf inputs
