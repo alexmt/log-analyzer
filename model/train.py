@@ -36,7 +36,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 # training_iters = 50000
 training_iters = 50000
-display_step = 10
+display_step = 1000
 
 # Initializing the variables
 init = tf.global_variables_initializer()

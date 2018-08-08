@@ -57,9 +57,9 @@ def read_data(fname):
         content = f.readlines()
     totaloutput=[]
     for line in content:
-        output = re.search('^(time)="(.*)T', line).groups()
-        input = re.search('Z" (.*)', line).groups()
-        output2 = re.findall('[A-Za-z]\w+', input[0])
+        output = re.search(r'^(time)="(.*)T', line).groups()
+        input = re.search(r'Z" (.*)', line).groups()
+        output2 = re.findall(r'[A-Za-z]\w+', input[0])
         output2 = [output[0]]+[output[1]]+output2
         totaloutput = totaloutput + output2
     totaloutput = np.array(totaloutput)
